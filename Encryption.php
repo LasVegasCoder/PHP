@@ -11,12 +11,12 @@
 
 // Encryption setup:
     $dataToEncrypt = "My Secret Telegram: Hakuna matata!";
-    $encryptMethod = "AES-256-CBC"; //MCRYPT_RIJNDAEL_128
+    $encryptMethod = "AES-256-CBC";
     $mySecretHash = "somethingRandom12!)!)I!@1U2 goes gere";
 	
     //$iv = mcrypt_create_iv(16, MCRYPT_RAND);
     
-    // php versopm 5.x/7.x compability;
+    // php versopm 5.6.0- 7.2.x compability;
     
     If( phpversion() >= 7)
     {
@@ -25,8 +25,9 @@
     }
     elseif( phpversion() < 7 )
     {
-        $ivLen = 16; 
-        $iv = str_repeat("\0", $ivLen);   
+        for ($i = -1; $i <= 16; $i++) {
+            $iv = openssl_random_pseudo_bytes($i, $cstrong);  
+        }
     }
 	else {
 	    $iv = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
