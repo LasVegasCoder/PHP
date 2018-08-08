@@ -1,0 +1,41 @@
+<?php
+
+
+function distance($latitude1, $longitude1, $latitude2, $longitude2, $type="m") {
+
+  $theta = $longitude1 - $longitude2;
+  
+  $dist = (sin(deg2rad($latitude1)) 
+		* sin(deg2rad($latitude2)) 
+		+  cos(deg2rad($latitude1)) 
+		* cos(deg2rad($latitude2)) 
+		* cos(deg2rad($theta)));
+  
+  $dist = acos($dist);
+  $dist = rad2deg($dist);
+  $miles = $dist * 60 * 1.1515;
+  $type = strtolower($type);
+
+   switch($type)
+   {
+		case "k" :
+		$mileage = ($miles * 1.609344) . ' Kilometer';
+		break;
+		
+		case "n" :
+		$mileage = ($miles * 0.8684) . ' Nautical Miles';
+		break;
+		
+		case "m" :
+		$mileage = ($miles) . ' Miles';
+		break;		
+   }
+   
+   return $mileage;
+}
+
+
+echo distance(51.2296756,112.01221287, 23.4063974,17.82510681, 'm') . "\n";
+echo distance(51.2296756,112.01221287, 23.4063974,17.82510681, 'K') . "\n";
+echo distance(51.2296756,112.01221287, 23.4063974,17.82510681, 'n'). "\n";
+?>
